@@ -505,7 +505,7 @@
             
             const link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = `{user}音のアンケート結果_${new Date().toISOString().slice(0, 10)}.json`;
+            link.download = `あなたの音のアンケート調査の回答_${new Date().toISOString().slice(0, 10)}.json`;
             link.click();
         }
 
