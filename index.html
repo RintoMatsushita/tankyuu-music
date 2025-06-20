@@ -243,7 +243,7 @@
     <div class="container">
         <div class="header">
             <h1>音に関するアンケート調査</h1>
-	    <h3>※研究調査の資料に用います。 ⌛予測回答時間：10分程度</h3>
+	    <h3>※研究調査の資料に用います。　⌛予測回答時間：10分程度</h3>
             <h4>あなたの音に対する感覚や体験について教えてください</h4>
 　　　　　　<p5>テーマ:通常は無意識に聞き流している音に1時間だけ注意を向けたら何が変わるのか。</p5>
         </div>
@@ -392,12 +392,18 @@
 
                 <div class="submit-section">
                     <button type="submit" class="submit-btn">📝 アンケートを送信</button>
-		<form action="matsudayo00001@gmail.com">
 
 	
-
+<hr>
+<hr>
 <h5>アンケート編集者:松下 凛土</h5>
-                </div>
+<dr>
+
+	
+</dr>
+		<h3>アンケート調査期間:2025年6月30日00:00～2025年7月25日23:59</h3>
+		<h3>アンケート調査期間の終了後、URLが無効となり、アクセスができなくなります。</h3>
+		</div>
             </form>
 
             <div id="results" class="results-section">
@@ -505,7 +511,7 @@
             
             const link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = `あなたの音のアンケート調査の回答_${new Date().toISOString().slice(0, 10)}.json`;
+            link.download = `{user}音のアンケート結果_${new Date().toISOString().slice(0, 10)}.json`;
             link.click();
         }
 
