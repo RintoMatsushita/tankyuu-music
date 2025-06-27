@@ -195,6 +195,177 @@
             font-size: 1.1em;
         }
 
+        .results-dashboard {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(248, 250, 252, 0.9);
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .dashboard-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #4facfe;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .chart-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .chart {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: end;
+            height: 100%;
+            gap: 15px;
+            padding: 0 20px;
+        }
+
+        .bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+
+        .bar {
+            width: 100%;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 5px;
+        }
+
+        .bar:hover {
+            background: linear-gradient(45deg, #357abd, #0096c7);
+            transform: translateY(-2px);
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .bar:hover .bar-value {
+            opacity: 1;
+        }
+
+        .bar-label {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        .toggle-dashboard {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .toggle-dashboard:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .recent-responses {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .recent-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .response-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 3px solid #4facfe;
+            font-size: 0.9em;
+            color: #666;
+        }
+
         .loading {
             display: none;
             text-align: center;
@@ -423,12 +594,267 @@
                 <h5>当探求アンケート調査についてのシステムは、Github経由にて公開しております。</h5>
                 <br>
             </form>
+
+            <!-- リアルタイム結果ダッシュボード -->
+            <button class="toggle-dashboard" onclick="toggleDashboard()">
+                📊 リアルタイム結果を表示/非表示
+            </button>
+
+            <div class="results-dashboard" id="resultsDashboard" style="display: none;">
+                <h2 class="dashboard-title">📈 アンケート結果ダッシュボード</h2>
+                
+                <!-- 統計サマリー -->
+                <div class="stats-overview">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalResponses">0</div>
+                        <div class="stat-label">総回答数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="todayResponses">0</div>
+                        <div class="stat-label">今日の回答数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="avgResponseTime">-</div>
+                        <div class="stat-label">平均回答時間</div>
+                    </div>
+                </div>
+
+                <!-- グラフエリア -->
+                <div class="chart-container">
+                    <div class="chart-title">Q1: 音について興味はありますか？</div>
+                    <div class="chart">
+                        <div class="bar-chart" id="chart1"></div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Q2: 音に注目して生活をしたことはありますか？</div>
+                    <div class="chart">
+                        <div class="bar-chart" id="chart2"></div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Q7: 自身は周囲の音に敏感だと思いますか？</div>
+                    <div class="chart">
+                        <div class="bar-chart" id="chart7"></div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Q8: 勉強中に音楽を聞くことはありますか？</div>
+                    <div class="chart">
+                        <div class="bar-chart" id="chart8"></div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Q9: 静かな空間は好きですか？</div>
+                    <div class="chart">
+                        <div class="bar-chart" id="chart9"></div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Q10: 音のある空間とどちらのほうを好みますか？</div>
+                    <div class="chart">
+                        <div class="bar-chart" id="chart10"></div>
+                    </div>
+                </div>
+
+                <!-- 最近の回答 -->
+                <div class="recent-responses">
+                    <div class="recent-title">💬 最近の回答 (最新5件)</div>
+                    <div id="recentResponsesList"></div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // アニメーション効果
+        // 回答データを管理するグローバル変数
+        let surveyResponses = [];
+        let chartData = {
+            '音への興味': { 'はい': 0, 'いいえ': 0 },
+            '音への注目経験': { 'はい': 0, 'いいえ': 0 },
+            '音への敏感さ': { 'はい': 0, 'いいえ': 0 },
+            '勉強中の音楽': { 'はい': 0, 'いいえ': 0 },
+            '静かな空間の好み': { 'はい': 0, 'いいえ': 0 },
+            '空間の好み': { '音あり': 0, '静か': 0 }
+        };
+        let dashboardVisible = false;
+
+        // ダッシュボード表示/非表示の切り替え
+        function toggleDashboard() {
+            const dashboard = document.getElementById('resultsDashboard');
+            dashboardVisible = !dashboardVisible;
+            dashboard.style.display = dashboardVisible ? 'block' : 'none';
+            
+            if (dashboardVisible) {
+                updateDashboard();
+            }
+        }
+
+        // 棒グラフを作成・更新する関数
+        function createBarChart(containerId, data, title) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = '';
+            
+            const maxValue = Math.max(...Object.values(data));
+            const total = Object.values(data).reduce((sum, val) => sum + val, 0);
+            
+            if (total === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #999; padding: 50px;">まだ回答がありません</div>';
+                return;
+            }
+
+            Object.entries(data).forEach(([label, value]) => {
+                const percentage = total > 0 ? (value / total * 100) : 0;
+                const height = maxValue > 0 ? (value / maxValue * 250) : 0;
+                
+                const barGroup = document.createElement('div');
+                barGroup.className = 'bar-group';
+                
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = height + 'px';
+                
+                const barValue = document.createElement('div');
+                barValue.className = 'bar-value';
+                barValue.textContent = value;
+                bar.appendChild(barValue);
+                
+                const barLabel = document.createElement('div');
+                barLabel.className = 'bar-label';
+                barLabel.innerHTML = `${label}<br><small>${percentage.toFixed(1)}%</small>`;
+                
+                barGroup.appendChild(bar);
+                barGroup.appendChild(barLabel);
+                container.appendChild(barGroup);
+            });
+        }
+
+        // 統計情報を更新
+        function updateStats() {
+            document.getElementById('totalResponses').textContent = surveyResponses.length;
+            
+            // 今日の回答数を計算
+            const today = new Date().toDateString();
+            const todayCount = surveyResponses.filter(response => 
+                new Date(response.timestamp).toDateString() === today
+            ).length;
+            document.getElementById('todayResponses').textContent = todayCount;
+            
+            // 平均回答時間（ダミーデータ）
+            document.getElementById('avgResponseTime').textContent = 
+                surveyResponses.length > 0 ? '8.5分' : '-';
+        }
+
+        // 最近の回答を表示
+        function updateRecentResponses() {
+            const container = document.getElementById('recentResponsesList');
+            if (!container) return;
+
+            container.innerHTML = '';
+            
+            const recent = surveyResponses.slice(-5).reverse();
+            
+            if (recent.length === 0) {
+                container.innerHTML = '<div style="color: #999; font-style: italic;">まだ回答がありません</div>';
+                return;
+            }
+            
+            recent.forEach((response, index) => {
+                const item = document.createElement('div');
+                item.className = 'response-item';
+                const date = new Date(response.timestamp).toLocaleString('ja-JP');
+                item.innerHTML = `
+                    <strong>回答 #${surveyResponses.length - index}</strong> - ${date}<br>
+                    音への興味: ${response.音への興味 || '未回答'} | 
+                    音への敏感さ: ${response.音への敏感さ || '未回答'}
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // ダッシュボード全体を更新
+        function updateDashboard() {
+            updateStats();
+            updateRecentResponses();
+            
+            // 各グラフを更新
+            createBarChart('chart1', chartData['音への興味'], 'Q1: 音について興味はありますか？');
+            createBarChart('chart2', chartData['音への注目経験'], 'Q2: 音に注目して生活をしたことはありますか？');
+            createBarChart('chart7', chartData['音への敏感さ'], 'Q7: 自身は周囲の音に敏感だと思いますか？');
+            createBarChart('chart8', chartData['勉強中の音楽'], 'Q8: 勉強中に音楽を聞くことはありますか？');
+            createBarChart('chart9', chartData['静かな空間の好み'], 'Q9: 静かな空間は好きですか？');
+            createBarChart('chart10', chartData['空間の好み'], 'Q10: 音のある空間とどちらのほうを好みますか？');
+        }
+
+        // 新しい回答を追加してグラフを更新
+        function addResponse(responseData) {
+            // タイムスタンプを追加
+            responseData.timestamp = new Date().toISOString();
+            
+            // 回答データを配列に追加
+            surveyResponses.push(responseData);
+            
+            // チャートデータを更新
+            Object.keys(chartData).forEach(key => {
+                if (responseData[key] && chartData[key][responseData[key]] !== undefined) {
+                    chartData[key][responseData[key]]++;
+                }
+            });
+            
+            // ダッシュボードが表示されている場合は更新
+            if (dashboardVisible) {
+                updateDashboard();
+            }
+            
+            // データを永続化（実際の運用ではサーバーに送信）
+            localStorage.setItem('surveyData', JSON.stringify({
+                responses: surveyResponses,
+                chartData: chartData
+            }));
+        }
+
+        // デモ用のサンプルデータを生成
+        function generateSampleData() {
+            const sampleResponses = [
+                { '音への興味': 'はい', '音への注目経験': 'いいえ', '音への敏感さ': 'はい', '勉強中の音楽': 'はい', '静かな空間の好み': 'はい', '空間の好み': '静か' },
+                { '音への興味': 'はい', '音への注目経験': 'はい', '音への敏感さ': 'はい', '勉強中の音楽': 'いいえ', '静かな空間の好み': 'はい', '空間の好み': '静か' },
+                { '音への興味': 'いいえ', '音への注目経験': 'いいえ', '音への敏感さ': 'いいえ', '勉強中の音楽': 'はい', '静かな空間の好み': 'いいえ', '空間の好み': '音あり' },
+                { '音への興味': 'はい', '音への注目経験': 'はい', '音への敏感さ': 'はい', '勉強中の音楽': 'いいえ', '静かな空間の好み': 'はい', '空間の好み': '静か' },
+                { '音への興味': 'はい', '音への注目経験': 'いいえ', '音への敏感さ': 'いいえ', '勉強中の音楽': 'はい', '静かな空間の好み': 'いいえ', '空間の好み': '音あり' }
+            ];
+            
+            sampleResponses.forEach(response => {
+                addResponse(response);
+            });
+        }
+
+        // ページ読み込み時の初期化
         document.addEventListener('DOMContentLoaded', function() {
+            // 保存されたデータを読み込み
+            const savedData = localStorage.getItem('surveyData');
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    surveyResponses = data.responses || [];
+                    chartData = data.chartData || chartData;
+                } catch (e) {
+                    console.log('保存されたデータの読み込みに失敗しました');
+                }
+            }
+            
+            // サンプルデータが無い場合は生成（デモ用）
+            if (surveyResponses.length === 0) {
+                generateSampleData();
+            }
+
+            // アニメーション効果
             const questions = document.querySelectorAll('.question');
             questions.forEach((question, index) => {
                 question.style.opacity = '0';
@@ -477,6 +903,17 @@
             
             try {
                 const formData = new FormData(this);
+                const responseData = {};
+                
+                // フォームデータを収集
+                for (let [key, value] of formData.entries()) {
+                    if (!key.startsWith('_')) { // Formspreeの隠しフィールドを除外
+                        responseData[key] = value;
+                    }
+                }
+                
+                // リアルタイムグラフ用にデータを追加
+                addResponse(responseData);
                 
                 const response = await fetch(this.action, {
                     method: 'POST',
@@ -494,6 +931,13 @@
                     
                     // 成功メッセージまでスクロール
                     successMessage.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // ダッシュボードを自動表示
+                    if (!dashboardVisible) {
+                        setTimeout(() => {
+                            toggleDashboard();
+                        }, 2000);
+                    }
                 } else {
                     throw new Error('送信に失敗しました');
                 }
