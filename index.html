@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>＜探求テーマ＞通常は無意識に聞き流している音に
-　　1時間だけ注意を向けたら何が変わるのか。　音に関するアンケート調査</title>
+    <title>＜探求テーマ＞通常は無意識に聞き流している音に1時間だけ注意を向けたら何が変わるのか。音に関するアンケート調査</title>
     <style>
         * {
             margin: 1;
@@ -167,60 +166,54 @@
             transform: translateY(0);
         }
 
-        .results-section {
-            margin-top: 40px;
-            padding: 30px;
-            background: rgba(240, 248, 255, 0.8);
-            border-radius: 15px;
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .success-message {
             display: none;
-        }
-
-        .results-title {
-            font-size: 1.5em;
-            color: #333;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .result-item {
-            background: white;
-            padding: 15px;
-            margin-bottom: 10px;
+            background: linear-gradient(45deg, #4caf50, #66bb6a);
+            color: white;
+            padding: 20px;
             border-radius: 10px;
-            border-left: 4px solid #4facfe;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1em;
         }
 
-        .result-question {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
+        .error-message {
+            display: none;
+            background: linear-gradient(45deg, #f44336, #ef5350);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1em;
         }
 
-        .result-answer {
-            color: #666;
-            font-style: italic;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
+        .loading {
+            display: none;
+            text-align: center;
             margin-top: 20px;
         }
 
-        .nav-btn {
-            background: #f8f9fa;
-            color: #333;
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4facfe;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
         }
 
-        .nav-btn:hover {
-            background: #4facfe;
-            color: white;
-            border-color: #4facfe;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @media (max-width: 600px) {
@@ -243,13 +236,19 @@
     <div class="container">
         <div class="header">
             <h1>音に関するアンケート調査</h1>
-	    <h3>※研究調査の資料に用います。　⌛予測回答時間：5～10分程度</h3>
+            <h3>※研究調査の資料に用います。⌛予測回答時間：10分程度</h3>
             <h4>あなたの音に対する感覚や体験について教えてください</h4>
-　　　　　　<p5>テーマ:通常は無意識に聞き流している音に1時間だけ注意を向けたら何が変わるのか。</p5>
+            <p>テーマ:通常は無意識に聞き流している音に1時間だけ注意を向けたら何が変わるのか。</p>
         </div>
 
-        <div class="surveyForm" action="https://formspree.io/f/mnnvldbb" method="POST">
-            <form id="surveyForm">
+        <div class="form-content">
+            <!-- Formspree用のフォーム -->
+            <form id="surveyForm" action="https://formspree.io/f/mnnvldbb" method="POST">
+                <!-- 非表示フィールド：Formspree用設定 -->
+                <input type="hidden" name="_subject" value="音に関するアンケート調査の回答">
+                <input type="hidden" name="_next" value="#success">
+                <input type="hidden" name="_captcha" value="false">
+
                 <div class="question">
                     <div class="question-text">
                         <span class="question-number">1</span>
@@ -257,11 +256,11 @@
                     </div>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="q1" value="はい" required>
+                            <input type="radio" name="音への興味" value="はい" required>
                             <span>はい</span>
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="q1" value="いいえ" required>
+                            <input type="radio" name="音への興味" value="いいえ" required>
                             <span>いいえ</span>
                         </label>
                     </div>
@@ -274,11 +273,11 @@
                     </div>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="q2" value="はい" required>
+                            <input type="radio" name="音への注目経験" value="はい" required>
                             <span>はい</span>
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="q2" value="いいえ" required>
+                            <input type="radio" name="音への注目経験" value="いいえ" required>
                             <span>いいえ</span>
                         </label>
                     </div>
@@ -289,7 +288,7 @@
                         <span class="question-number">3</span>
                         どんな音に注目したことがありますか？
                     </div>
-                    <textarea name="q3" placeholder="具体的な音や体験について自由にお書きください..." required></textarea>
+                    <textarea name="注目した音の種類" placeholder="具体的な音や体験について自由にお書きください..." required></textarea>
                 </div>
 
                 <div class="question">
@@ -297,7 +296,7 @@
                         <span class="question-number">4</span>
                         その時のあなたの感情として近いものを教えてください。
                     </div>
-                    <textarea name="q4" placeholder="その音を聞いた時に感じた気持ちや感情について教えてください..." required></textarea>
+                    <textarea name="音を聞いた時の感情" placeholder="その音を聞いた時に感じた気持ちや感情について教えてください..." required></textarea>
                 </div>
 
                 <div class="question">
@@ -305,7 +304,7 @@
                         <span class="question-number">5</span>
                         日常で「心地よい」と感じた音はなんですか？
                     </div>
-                    <textarea name="q5" placeholder="リラックスできる音、好きな音について教えてください..." required></textarea>
+                    <textarea name="心地よいと感じる音" placeholder="リラックスできる音、好きな音について教えてください..." required></textarea>
                 </div>
 
                 <div class="question">
@@ -313,7 +312,7 @@
                         <span class="question-number">6</span>
                         日常で「不愉快だ」と感じた音はなんですか？
                     </div>
-                    <textarea name="q6" placeholder="嫌いな音、ストレスを感じる音について教えてください..." required></textarea>
+                    <textarea name="不愉快だと感じる音" placeholder="嫌いな音、ストレスを感じる音について教えてください..." required></textarea>
                 </div>
 
                 <div class="question">
@@ -323,11 +322,11 @@
                     </div>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="q7" value="はい" required>
+                            <input type="radio" name="音への敏感さ" value="はい" required>
                             <span>はい</span>
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="q7" value="いいえ" required>
+                            <input type="radio" name="音への敏感さ" value="いいえ" required>
                             <span>いいえ</span>
                         </label>
                     </div>
@@ -340,11 +339,11 @@
                     </div>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="q8" value="はい" required>
+                            <input type="radio" name="勉強中の音楽" value="はい" required>
                             <span>はい</span>
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="q8" value="いいえ" required>
+                            <input type="radio" name="勉強中の音楽" value="いいえ" required>
                             <span>いいえ</span>
                         </label>
                     </div>
@@ -357,11 +356,11 @@
                     </div>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="q9" value="はい" required>
+                            <input type="radio" name="静かな空間の好み" value="はい" required>
                             <span>はい</span>
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="q9" value="いいえ" required>
+                            <input type="radio" name="静かな空間の好み" value="いいえ" required>
                             <span>いいえ</span>
                         </label>
                     </div>
@@ -374,11 +373,11 @@
                     </div>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="q10" value="音あり" required>
+                            <input type="radio" name="空間の好み" value="音あり" required>
                             <span>音あり</span>
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="q10" value="静か" required>
+                            <input type="radio" name="空間の好み" value="静か" required>
                             <span>静か</span>
                         </label>
                     </div>
@@ -386,145 +385,48 @@
                         <div style="font-weight: bold; margin-bottom: 10px; color: #666;">
                             また、選んだ理由を簡単に述べてください：
                         </div>
-                        <textarea name="q10_reason" placeholder="選択した理由について教えてください..." required></textarea>
+                        <textarea name="空間の好みの理由" placeholder="選択した理由について教えてください..." required></textarea>
                     </div>
                 </div>
 
                 <div class="submit-section">
-                    <button type="submit" class="submit-btn">📝 アンケートを送信</button>
-		</div>
-	    </form>
-
-	
-<br>
-<br>
-<h2>アンケート編集者:松下 凛土</h2>
-<hr>
-		<h3>⚠アンケート調査にあたっての注意事項⚠</h3> 
-		<h4>1.アンケート調査期間:2025年6月30日00:00～2025年7月25日23:59</h4>
-		<h5>2.アンケート調査期間の終了後、URLが完全無効となり、アクセスができなくなります。（※"終了時刻"は飽く迄前後する場合がございますので、お早めの御回答をお願い致します。)</h5>
-		<h5>3.回答の際、不適切な表現、中傷的な書き込み等が確認された場合には、直ちに回答の無効化＆削除させて頂きます。</h5>
-		<h5>4.同一IP，端末からの"複数回答"は、回答の無効化＆削除の対象になる場合があります。</h5>
-		<h5>5.探求に関連する、プレゼン発表等の内容を、許可なく故意にSNS上へ投稿することはおやめください。</h5>
-		<h5>6.回答の内容によっては、研究調査発表にそのまま抽出させて頂く場合がございますので、ご了承ください。（※回答者は匿名とする）</h5>
-		<h5>7.期間内におかれまして、メンテナンス，サイト内の修正を行わせていただく場合がございます。</h5>
-		<br>
-		<br>
-		<h5>当探求アンケート調査についてのシステムは、Github経由にて公開しております。</h5>
-		<br>
-		</div>
-            </form>
-	  </div>
-	    
-            <div id="results" class="results-section">
-                <h2 class="results-title">あなたの回答結果</h2>
-                <div id="resultsList"></div>
-                <div class="nav-buttons">
-                    <button class="nav-btn" onclick="resetForm()">もう一度回答する</button>
-                    <button class="nav-btn" onclick="downloadResults()">結果をダウンロード</button>
+                    <button type="submit" class="submit-btn" id="submitBtn">📝 アンケートを送信</button>
+                    
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p>送信中...</p>
+                    </div>
+                    
+                    <div class="success-message" id="successMessage">
+                        ✅ アンケートのご回答ありがとうございました！<br>
+                        回答が正常に送信されました。
+                    </div>
+                    
+                    <div class="error-message" id="errorMessage">
+                        ❌ 送信中にエラーが発生しました。<br>
+                        しばらく時間をおいて再度お試しください。
+                    </div>
                 </div>
-            </div>
+
+                <br><br>
+                <h4>アンケート編集者:松下 凛土</h4>
+                <hr>
+                <h3>⚠アンケート調査にあたっての注意事項⚠</h3> 
+                <h4>1.アンケート調査期間:2025年6月30日00:00～2025年7月25日23:59</h4>
+                <h5>2.アンケート調査期間の終了後、URLが完全無効となり、アクセスができなくなります。（※"終了時刻"は飽く迄前後する場合がございますので、お早めの御回答をお願い致します。)</h5>
+                <h5>3.回答の際、不適切な表現、中傷的な書き込み等が確認された場合には、直ちに回答の無効化＆削除させて頂きます。</h5>
+                <h5>4.同一IP，端末からの"複数回答"は、回答の無効化＆削除の対象になる場合があります。</h5>
+                <h5>5.探求に関連する、プレゼン発表等の内容を、許可なく故意にSNS上へ投稿することはおやめください。</h5>
+                <h5>6.回答の内容によっては、研究調査発表にそのまま抽出させて頂く場合がございますので、ご了承ください。（※回答者は匿名とする）</h5>
+                <h5>7.期間内におかれまして、メンテナンス，サイト内の修正を行わせていただく場合がございます。</h5>
+                <br><br>
+                <h5>当探求アンケート調査についてのシステムは、Github経由にて公開しております。</h5>
+                <br>
+            </form>
         </div>
     </div>
 
     <script>
-        // 回答データを保存する配列
-        let surveyData = [];
-
-        // フォーム送信処理
-        document.getElementById('surveyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const answers = {};
-            
-            // 全ての回答を収集
-            for (let [key, value] of formData.entries()) {
-                answers[key] = value;
-            }
-            
-            // データを保存
-            surveyData.push({
-                timestamp: new Date().toLocaleString('ja-JP'),
-                answers: answers
-            });
-            
-            // 結果を表示
-            displayResults(answers);
-            
-            // フォームを隠して結果を表示
-            document.getElementById('surveyForm').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
-            
-            // 結果セクションまでスクロール
-            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        // 結果表示機能
-        function displayResults(answers) {
-            const questions = [
-                '音について興味はありますか？',
-                '音に注目して生活をしたことはありますか？',
-                'どんな音に注目したことがありますか？',
-                'その時の感情としては？',
-                '日常で「心地よい」と感じた音はなんですか？',
-                '日常で「不愉快だ」と感じた音はなんですか？',
-                '自身は周囲の音に敏感だと思いますか？',
-                '勉強中に音楽を聞くことはありますか？',
-                '静かな空間は好きですか？',
-                '音のある空間とどちらのほうを好みますか？'
-            ];
-            
-            const resultsList = document.getElementById('resultsList');
-            resultsList.innerHTML = '';
-            
-            questions.forEach((question, index) => {
-                const questionKey = `q${index + 1}`;
-                let answer = answers[questionKey] || '未回答';
-                
-                // 質問10の場合は理由も含める
-                if (index === 9 && answers['q10_reason']) {
-                    answer += `（理由: ${answers['q10_reason']}）`;
-                }
-                
-                const resultItem = document.createElement('div');
-                resultItem.className = 'result-item';
-                resultItem.innerHTML = `
-                    <div class="result-question">${index + 1}. ${question}</div>
-                    <div class="result-answer">${answer}</div>
-                `;
-                resultsList.appendChild(resultItem);
-            });
-        }
-
-        // フォームリセット機能
-        function resetForm() {
-            document.getElementById('surveyForm').reset();
-            document.getElementById('surveyForm').style.display = 'block';
-            document.getElementById('results').style.display = 'none';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // 結果ダウンロード機能
-        function downloadResults() {
-            if (surveyData.length === 0) return;
-            
-            const latestData = surveyData[surveyData.length - 1];
-            const data = {
-                調査名: '音に関するアンケート調査',
-                回答日時: latestData.timestamp,
-                回答内容: latestData.answers
-            };
-            
-            const dataStr = JSON.stringify(data, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `{user}音のアンケート結果_${new Date().toISOString().slice(0, 10)}.json`;
-            link.click();
-        }
-
         // アニメーション効果
         document.addEventListener('DOMContentLoaded', function() {
             const questions = document.querySelectorAll('.question');
@@ -556,6 +458,54 @@
                     }
                 });
             });
+        });
+
+        // フォーム送信処理
+        document.getElementById('surveyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // ボタンを無効化し、ローディング表示
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            try {
+                const formData = new FormData(this);
+                
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // 成功時の処理
+                    loading.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    this.reset(); // フォームをリセット
+                    
+                    // 成功メッセージまでスクロール
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    throw new Error('送信に失敗しました');
+                }
+            } catch (error) {
+                // エラー時の処理
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+                console.error('Form submission error:', error);
+            } finally {
+                // ボタンを再有効化
+                submitBtn.disabled = false;
+            }
         });
     </script>
 </body>
