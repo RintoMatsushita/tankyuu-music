@@ -243,12 +243,12 @@
     <div class="container">
         <div class="header">
             <h1>音に関するアンケート調査</h1>
-	    <h3>※研究調査の資料に用います。　⌛予測回答時間：10分程度</h3>
+	    <h3>※研究調査の資料に用います。　⌛予測回答時間：5～10分程度</h3>
             <h4>あなたの音に対する感覚や体験について教えてください</h4>
 　　　　　　<p5>テーマ:通常は無意識に聞き流している音に1時間だけ注意を向けたら何が変わるのか。</p5>
         </div>
 
-        <div class="form-content">
+        <div class="surveyForm" action="https://formspree.io/f/mnnvldbb" method="POST">
             <form id="surveyForm">
                 <div class="question">
                     <div class="question-text">
@@ -396,7 +396,7 @@
 	
 <br>
 <br>
-<h4>アンケート編集者:松下 凛土</h4>
+<h2>アンケート編集者:松下 凛土</h2>
 <hr>
 		<h3>⚠アンケート調査にあたっての注意事項⚠</h3> 
 		<h4>1.アンケート調査期間:2025年6月30日00:00～2025年7月25日23:59</h4>
@@ -414,10 +414,10 @@
             </form>
 
             <div id="results" class="results-section">
-                <h2 class="results-title">📊 あなたの回答結果</h2>
+                <h2 class="results-title">あなたの回答結果</h2>
                 <div id="resultsList"></div>
                 <div class="nav-buttons">
-                    <button class="nav-btn" onclick="resetForm()">🔄 もう一度回答する</button>
+                    <button class="nav-btn" onclick="resetForm()">もう一度回答する</button>
                     <button class="nav-btn" onclick="downloadResults()">結果をダウンロード</button>
                 </div>
             </div>
